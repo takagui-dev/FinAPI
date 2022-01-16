@@ -68,6 +68,12 @@ app.post('/account', (request, response) => {
 
 app.use(verifyIfExistsAccountCPF);
 
+app.get('/account', (request, response) => {
+  const { customer } = request;
+
+  return response.status(200).json({ customer });
+});
+
 app.put('/account', (request, response) => {
   const { name } = request.body;
   const { customer } = request;
