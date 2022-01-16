@@ -83,6 +83,14 @@ app.put('/account', (request, response) => {
   return response.status(201).json({ customer });
 });
 
+app.delete('/account', (request, response) => {
+  const { customer } = request;
+
+  customers.splice(customer, 1);
+
+  return response.status(200).json(customers);
+});
+
 app.get('/statement', (request, response) => {
   const { customer } = request;
 
