@@ -46,7 +46,7 @@ app.post('/account', (request, response) => {
     id: uuidV4(),
     cpf,
     name,
-    statement: []
+    statement: [],
   };
 
   customers.push(customer);
@@ -58,6 +58,22 @@ app.use(verifyIfExistsAccountCPF);
 
 app.get('/statement', (request, response) => {
   const { customer } = request;
+
+  return response.status(200).json(customer.statement);
+});
+
+app.post('/deposit', (request, response) => {
+  const { amount, description } = request.body;
+  const { customer } = request;
+
+  const statementOperation = {
+    amount,
+    description,
+    created_at: new Date(),
+    type: 'credit',
+  };
+
+  customer.statement.push(statementOperation  );
 
   return response.status(200).json(customer.statement);
 });
