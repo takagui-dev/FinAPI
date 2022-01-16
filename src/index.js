@@ -74,6 +74,20 @@ app.get('/statement', (request, response) => {
   return response.status(200).json(customer.statement);
 });
 
+app.get('/statement/date', (request, response) => {
+  const { date } = request.query;
+  const { customer } = request;
+
+  const dateFormat = new Date(date + " 00:00");
+
+  const statement = customer.statement.filter(
+    (statement) =>
+      statement.created_at.toDateString() === new Date(dateFormat).toDateString()
+  );
+
+  return response.status(200).json(statement);
+});
+
 app.post('/deposit', (request, response) => {
   const { amount, description } = request.body;
   const { customer } = request;
