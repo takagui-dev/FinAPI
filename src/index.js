@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { response } from 'express';
 import { v4 as uuidV4 } from 'uuid';
 
 const app = express();
@@ -147,6 +147,14 @@ app.post('/withdraw', (request, response) => {
   customer.statement.push(statementOperation);
 
   return response.status(200).json(statementOperation);
+});
+
+app.get('/balance', (request, response) => {
+  const { customer } = request;
+
+  const balance = getBalance(customer.statement);
+
+  return response.status(200).json({ balance });
 });
 
 app.listen(3333, () => {
